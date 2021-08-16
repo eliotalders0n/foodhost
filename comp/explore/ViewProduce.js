@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   FlatList,
+  Alert,
 } from "react-native";
 import firebase from "../../firebase";
 import { SIZES, FONTS, COLORS } from "../../constants";
@@ -15,7 +16,7 @@ import useGetUser from "../crud/useGetUser";
 
 const ViewProduce = ({ route }) => {
   let data = route.params.item;
-
+  console.log(route);
   let item = useGetUser(data.u_id).docs;
   const navigation = useNavigation();
 
@@ -45,7 +46,21 @@ const ViewProduce = ({ route }) => {
       />
     </TouchableOpacity>
   );
-
+  const checkUser = () => {
+    if (data.u_id == firebase.auth().currentUser.uid) {
+      Alert.alert("Denied", "Cant inquire from yourself", [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => navigation.goBack() },
+      ]);
+      console.log("Cant inquire from yourself");
+    } else {
+      navigation.navigate("inquire", { data });
+    }
+  };
   return (
     <ScrollView style={{ backgroundColor: COLORS.white }}>
       <View
@@ -98,13 +113,17 @@ const ViewProduce = ({ route }) => {
             {data.produce_category}
           </Text>
           <Text
-            style={{ color: COLORS.darkgray, ...FONTS.h6, textAlign: "center" }}
+            style={{
+              color: COLORS.darkgray,
+              ...FONTS.h6,
+              textAlign: "center",
+            }}
           >
             {data.delivery === "0" ? "Stationary" : "Mobile"}
           </Text>
           <View style={{ flexDirection: "row", marginVertical: 20 }}>
             <TouchableOpacity
-              onPress={() => navigation.navigate("inquire", { data })}
+              onPress={() => checkUser()}
               style={{
                 flex: 1,
                 borderRadius: 10,
@@ -140,12 +159,20 @@ const ViewProduce = ({ route }) => {
             }}
           >
             <Text
-              style={{ color: COLORS.black, ...FONTS.h6, textAlign: "center" }}
+              style={{
+                color: COLORS.black,
+                ...FONTS.h6,
+                textAlign: "center",
+              }}
             >
               Price
             </Text>
             <Text
-              style={{ color: COLORS.black, ...FONTS.h2, textAlign: "center" }}
+              style={{
+                color: COLORS.black,
+                ...FONTS.h2,
+                textAlign: "center",
+              }}
             >
               {data.price}
             </Text>
@@ -162,12 +189,20 @@ const ViewProduce = ({ route }) => {
             }}
           >
             <Text
-              style={{ color: COLORS.black, ...FONTS.h6, textAlign: "center" }}
+              style={{
+                color: COLORS.black,
+                ...FONTS.h6,
+                textAlign: "center",
+              }}
             >
               Items available
             </Text>
             <Text
-              style={{ color: COLORS.black, ...FONTS.h2, textAlign: "center" }}
+              style={{
+                color: COLORS.black,
+                ...FONTS.h2,
+                textAlign: "center",
+              }}
             >
               {data.items}
             </Text>

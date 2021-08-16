@@ -16,6 +16,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import uuid from "uuid";
+import * as Location from "expo-location";
 
 function AddProduct() {
   const [price, setPrice] = useState(null);
@@ -123,6 +124,24 @@ function AddProduct() {
     return url;
   }
 
+  // const [location, setLocation] = useState(null);
+  const [latitude, setlatitude] = useState();
+  const [longitude, setlongitude] = useState();
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setlatitude(location.coords.latitude);
+      setlongitude(location.coords.longitude);
+    })();
+  }, []);
+
   function addProduct(url) {
     let asd = {
       produce_category: ItemName,
@@ -130,6 +149,8 @@ function AddProduct() {
       createdAt: new Date(Date.now()).toString(),
       price: price,
       items: parseInt(items),
+      latitude: latitude,
+      longitude: longitude,
       delivery: delivery,
       images: url,
       u_id: firebase.auth().currentUser.uid,
@@ -184,7 +205,7 @@ function AddProduct() {
   );
 
   return (
-    <ScrollView style={{ backgroundColor: COLORS.white, flex: 1 }}>
+    <ScrollView style={{ flex: 1 }}>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -198,9 +219,7 @@ function AddProduct() {
           </View>
         </View>
       </Modal>
-      <View
-        style={{ backgroundColor: COLORS.white, padding: SIZES.padding * 2 }}
-      >
+      <View style={{ padding: SIZES.padding * 2 }}>
         <Text style={{ ...FONTS.h5 }}>
           Add a product to your catalogue for buyers to see what you have in
           stock.
@@ -240,12 +259,12 @@ function AddProduct() {
               borderRadius: 10,
               paddingVertical: 10,
               marginHorizontal: 5,
-              backgroundColor: COLORS.black,
+              backgroundColor: COLORS.white,
             }}
           >
             <Text
               style={{
-                color: COLORS.white,
+                color: COLORS.black,
                 textAlign: "center",
                 padding: SIZES.padding,
                 ...FONTS.h5,
@@ -254,7 +273,7 @@ function AddProduct() {
               Add Images
             </Text>
           </TouchableOpacity>
-          <Text style={{ ...FONTS.h4, marginTop: 10, color: COLORS.white }}>
+          <Text style={{ ...FONTS.h4, marginTop: 10, color: COLORS.black }}>
             Price
           </Text>
           <TextInput
@@ -263,10 +282,12 @@ function AddProduct() {
             onChangeText={(value) => setPrice(value)}
             style={{ padding: SIZES.padding * 2 }}
           />
-          <Text style={{ ...FONTS.h5, marginTop: 10 }}>Items Available</Text>
+          <Text style={{ ...FONTS.h4, marginTop: 10, color: COLORS.black }}>
+            Items Available
+          </Text>
           <TextInput
             keyboardType="number-pad"
-            placeholder="What do you have available"
+            placeholder="How many do you have available"
             onChangeText={(value) => setItems(value)}
             style={{ padding: SIZES.padding * 2 }}
           />
@@ -320,7 +341,7 @@ function AddProduct() {
         </View>
         <TouchableOpacity
           style={{
-            backgroundColor: COLORS.black,
+            backgroundColor: COLORS.white,
             marginTop: 40,
             borderRadius: 10,
             paddingHorizontal: 30,
@@ -329,7 +350,7 @@ function AddProduct() {
           onPress={() => UploadImageAndPost()}
         >
           <Text
-            style={{ color: COLORS.white, textAlign: "right", ...FONTS.h4 }}
+            style={{ color: COLORS.black, textAlign: "right", ...FONTS.h4 }}
           >
             Add Product
           </Text>
@@ -344,7 +365,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.8)",
+    // backgroundColor: "rgba(0,0,0,0.8)",
   },
   modalView: {
     margin: 20,

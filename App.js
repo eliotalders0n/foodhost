@@ -15,13 +15,12 @@ import Welcome from "./comp/signin/Welcome";
 
 import Inquiry from "./comp/orders/Inquiry";
 import EditProduct from "./comp/profile/EditProduct";
-import { View, Text } from "react-native";
+import { View, Text, LogBox } from "react-native";
 import updateProfile from "./comp/profile/UpdateProfile";
 import Inquiries from "./comp/profile/Inquiries";
 import Feedback from "./comp/profile/Feedback";
-
+// console.disableYellowBox = true;
 const Stack = createStackNavigator();
-
 const App = () => {
   const [loaded_, setLoaded] = useState(false);
   const [loggedin, setLoggedin] = useState(false);
@@ -139,6 +138,7 @@ const App = () => {
         />
         <Stack.Screen
           name="Feedback"
+          Flutterwave
           component={Feedback}
           options={{ headerShown: true, title: "Feedback" }}
         />

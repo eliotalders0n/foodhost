@@ -139,7 +139,7 @@ const ViewProduct = ({ route }) => {
   const [item, setItem] = useState(data);
   console.log(item);
   return (
-    <ScrollView style={{ backgroundColor: COLORS.white }}>
+    <ScrollView>
       <Modal animationType="slide" transparent={true} visible={modalVisible}>
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
@@ -154,7 +154,7 @@ const ViewProduct = ({ route }) => {
 
       <View
         style={{
-          backgroundColor: COLORS.white,
+          // backgroundColor: COLORS.white,
           flex: 1,
           padding: SIZES.padding * 2,
         }}
@@ -191,10 +191,10 @@ const ViewProduct = ({ route }) => {
         </View>
         <View
           style={{
-            paddingTop: 10,
+            paddingTop: 5,
             marginHorizontal: 20,
-            marginTop: -30,
-            backgroundColor: COLORS.white,
+            marginTop: 5,
+            // backgroundColor: "rgba(0,0,0,0.2)",
             borderRadius: 10,
           }}
         >
@@ -233,7 +233,7 @@ const ViewProduct = ({ route }) => {
               padding: SIZES.padding * 2,
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: COLORS.dark,
+              backgroundColor: COLORS.secondary,
               marginHorizontal: 5,
             }}
           >
@@ -247,7 +247,7 @@ const ViewProduct = ({ route }) => {
               padding: SIZES.padding * 2,
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: COLORS.dark2,
+              backgroundColor: COLORS.secondary,
               marginHorizontal: 5,
             }}
           >
@@ -261,33 +261,34 @@ const ViewProduct = ({ route }) => {
               justifyContent: "center",
               alignItems: "center",
               borderRadius: 10,
-              backgroundColor: COLORS.black,
+              backgroundColor: COLORS.white,
               marginHorizontal: 5,
             }}
           >
-            <Feather name="x" color="white" size={24} />
+            <Feather name="x" color="black" size={24} />
           </TouchableOpacity>
         </View>
 
-        <View style={{ flexDirection: "row", marginVertical: 10 }}>
+        <View style={{ marginVertical: 10 }}>
           <View
             style={{
               flex: 1,
               marginHorizontal: 5,
-              padding: SIZES.padding * 4,
+              marginBottom: 10,
+              padding: SIZES.padding * 2,
               borderRadius: 10,
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: COLORS.black,
+              backgroundColor: "white",
             }}
           >
             <Text
-              style={{ color: COLORS.white, ...FONTS.h6, textAlign: "center" }}
+              style={{ color: COLORS.black, ...FONTS.h6, textAlign: "center" }}
             >
               Price
             </Text>
             <Text
-              style={{ color: COLORS.white, ...FONTS.h2, textAlign: "center" }}
+              style={{ color: COLORS.black, ...FONTS.h2, textAlign: "center" }}
             >
               {item.price}
             </Text>
@@ -296,20 +297,21 @@ const ViewProduct = ({ route }) => {
             style={{
               flex: 1,
               marginHorizontal: 5,
-              padding: SIZES.padding * 4,
+              padding: SIZES.padding * 2,
+              marginBottom: 5,
               borderRadius: 10,
               justifyContent: "center",
               alignItems: "center",
-              backgroundColor: COLORS.black,
+              backgroundColor: "white",
             }}
           >
             <Text
-              style={{ color: COLORS.white, ...FONTS.h6, textAlign: "center" }}
+              style={{ color: COLORS.black, ...FONTS.h6, textAlign: "center" }}
             >
               Items available
             </Text>
             <Text
-              style={{ color: COLORS.white, ...FONTS.h2, textAlign: "center" }}
+              style={{ color: COLORS.black, ...FONTS.h2, textAlign: "center" }}
             >
               {item.items}
             </Text>
@@ -336,7 +338,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.8)",
+    // backgroundColor: "rgba(0,0,0,0.8)",
   },
   modalView: {
     margin: 20,

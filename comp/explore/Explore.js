@@ -6,46 +6,41 @@ import {
   Image,
   FlatList,
   ScrollView,
+  AppRegistry,
+  StyleSheet,
+  Animated,
+  Dimensions,
 } from "react-native";
 import firebase from "../../firebase";
 import { SIZES, FONTS, COLORS } from "../../constants";
 import useGetFarmers from "../crud/useGetFamers";
 import { useNavigation } from "@react-navigation/native";
-import useGetCategories from "../crud/useGetCategories";
 import useGetAllProducts from "../crud/useGetAllProducts";
-import MapView from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
+import MapViewDirections from "react-native-maps-directions";
 
 function Explore() {
   let users = useGetFarmers().docs;
-  let categories = useGetCategories().docs;
-  const navigation = useNavigation();
-  const [location, setLocation] = useState();
-  const locationResult = useState();
   let products = useGetAllProducts().docs;
+  // console.log(products);
+  const navigation = useNavigation();
 
-  React.useEffect(() => {
+  const [location, setLocation] = useState(null);
+  useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        // add alert
-        Alert.alert("Location", "Permission denied", [
-          {
-            text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
-            style: "cancel",
-          },
-          { text: "OK", onPress: () => navigation.goBack() },
-        ]);
-      } // confused
-      console.log("Permssion granted");
-      let getlocation = await Location.getCurrentPositionAsync({});
-      // this.setState({ locationResult: JSON.stringify(location) });
-      setLocation(getlocation);
-      console.log(getlocation + " im here");
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let currentLocation = await Location.getCurrentPositionAsync({});
+      setLocation(currentLocation.coords);
     })();
   }, []);
-  // console.log(location + "im here");
+  console.log(location);
+  console.log("somthing", products);
 
   const renderUsers = ({ item }) => (
     <TouchableOpacity
@@ -81,7 +76,6 @@ function Explore() {
       </View>
     </TouchableOpacity>
   );
-
   return (
     <ScrollView>
       <View
@@ -109,15 +103,70 @@ function Explore() {
         <View style={{ marginTop: 10 }}>
           <Text style={{ ...FONTS.h4 }}>Discover</Text>
           {/* place map here */}
-          <MapView
-            style={{ flex: 1, height: SIZES.height }}
-            initialRegion={{
-              latitude: 37.78825,
-              longitude: -122.4324,
-              latitudeDelta: 0.05,
-              longitudeDelta: 0.05,
-            }}
-          />
+          {location !== null && (
+            <MapView
+              provider={PROVIDER_GOOGLE}
+              style={{ flex: 1, height: SIZES.height }}
+              region={location}
+              mapType="standard"
+              initialRegion={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+              showsUserLocation
+            >
+              <Marker
+                title="You are here"
+                coordinate={{
+                  latitude: location.latitude,
+                  longitude: location.longitude,
+                  latitudeDelta: 0.0922,
+                  longitudeDelta: 0.0421,
+                }}
+                pinColor={COLORS.secondary}
+                Location={{
+                  accuracy: 5,
+                }}
+              />
+              {products &&
+                products.map(
+                  (item, index) =>
+                    item &&
+                    item.latitude && (
+                      <Marker
+                        key={index}
+                        title={item.produce}
+                        pinColor={COLORS.secondary}
+                        onPress={() =>
+                          navigation.navigate("viewProduce", { item })
+                        }
+                        Location={{
+                          accuracy: 5,
+                        }}
+                        coordinate={{
+                          latitude: item.latitude,
+                          longitude: item.longitude,
+                          latitudeDelta: 0.0922,
+                          longitudeDelta: 0.0421,
+                        }}
+                      >
+                        <Image
+                          key={index.u_id}
+                          style={{
+                            width: 70,
+                            height: 100,
+                            borderRadius: 100,
+                            resizeMode: "contain",
+                          }}
+                          source={{ uri: item.images }}
+                        />
+                      </Marker>
+                    )
+                )}
+            </MapView>
+          )}
         </View>
       </View>
     </ScrollView>
