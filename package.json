@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/geolocation": "^1.4.2",
     "@react-native-seoul/masonry-list": "^1.0.6",
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/elements": "^1.0.1",
@@ -17,21 +18,24 @@
     "expo-firebase-recaptcha": "^1.4.2",
     "expo-font": "~9.2.1",
     "expo-image-picker": "~10.2.2",
+    "expo-location": "~12.1.2",
     "expo-notifications": "~0.12.3",
     "expo-status-bar": "~1.0.4",
     "firebase": "^8.2.3",
+    "flutterwave-react-v3": "^1.0.10",
+    "link": "^0.1.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-maps": "^0.28.0",
+    "react-native-maps-directions": "^1.8.0",
     "react-native-pager-view": "^5.0.12",
     "react-native-screens": "~3.4.0",
     "react-native-tab-view": "^3.1.1",
     "react-native-web": "~0.13.12",
     "react-native-webview": "^11.6.2",
-    "react-navigation": "^4.4.4",
-    "expo-location": "~12.1.2"
+    "react-navigation": "^4.4.4"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

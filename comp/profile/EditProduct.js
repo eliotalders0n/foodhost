@@ -91,10 +91,8 @@ const EditProduct = ({ route }) => {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: COLORS.white, flex: 1 }}>
-      <View
-        style={{ backgroundColor: COLORS.white, padding: SIZES.padding * 2 }}
-      >
+    <ScrollView style={{ flex: 1 }}>
+      <View style={{ padding: SIZES.padding * 2 }}>
         <Text style={{ ...FONTS.h5 }}>
           Update the price and stock of your item below.
         </Text>
@@ -177,7 +175,7 @@ const EditProduct = ({ route }) => {
         <TouchableOpacity
           onPress={() => updateProduce()}
           style={{
-            backgroundColor: COLORS.black,
+            backgroundColor: COLORS.white,
             marginTop: 40,
             borderRadius: 10,
             paddingHorizontal: 30,
@@ -185,7 +183,7 @@ const EditProduct = ({ route }) => {
           }}
         >
           <Text
-            style={{ color: COLORS.white, textAlign: "right", ...FONTS.h4 }}
+            style={{ color: COLORS.black, textAlign: "right", ...FONTS.h4 }}
           >
             Update Product
           </Text>

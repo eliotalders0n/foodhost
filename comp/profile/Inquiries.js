@@ -146,8 +146,14 @@ function Inquiries() {
           Price:{item.price}
         </Text>
       </View>
-      <Text style={{ paddingHorizontal: 10, ...FONTS.h5, color: COLORS.dark }}>
+      <Text
+        style={{ paddingHorizontal: 10, ...FONTS.h5, color: COLORS.darkgray }}
+      >
         Request sent on {item.createdAt.slice(0, 16)}
+      </Text>
+
+      <Text style={{ paddingHorizontal: 10, ...FONTS.h5, color: COLORS.dark }}>
+        Prefered meal, instruction : {item.instruction}
       </Text>
 
       {item.status === "pending" ? (

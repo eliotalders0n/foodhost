@@ -158,7 +158,7 @@ function profile() {
       </View>
       <View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("feedback", { user })}
+          onPress={() => navigation.navigate("Feedback", { user })}
           style={styles.TouchableOp}
         >
           <Text style={styles.TextNav}>Feedback</Text>

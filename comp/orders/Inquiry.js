@@ -4,6 +4,7 @@ import firebase from "../../firebase";
 import { SIZES, FONTS, COLORS } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
 import useGetUser from "../crud/useGetUser";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 
 const Inquiry = ({ route }) => {
   const navigation = useNavigation();
@@ -11,45 +12,67 @@ const Inquiry = ({ route }) => {
   let user = useGetUser(data.u_id).docs;
   const [bags, setBags] = useState(null);
   const [instruction, setInstruction] = useState(null);
-  // console.log(user.id);
-  // console.log(firebase.auth().currentUser.uid);
+  console.log("first number", user.phone);
+  console.log("second number", firebase.auth().currentUser.phoneNumber);
 
-  function sendInquiry() {
-    if (data.u_id == firebase.auth().currentUser.uid) {
-      Alert.alert("Denied", "Cant inquire from yourself", [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        { text: "OK", onPress: () => navigation.goBack() },
-      ]);
-      console.log("Cant inquire from yourself");
-    } else {
-      let inquiry = {
-        buyer: firebase.auth().currentUser.uid,
-        createdAt: new Date(Date.now()).toString(),
-        price: parseInt(data.price),
-        produce: data.produce,
-        quant: parseInt(bags),
-        ProductID: data.id,
-        instruction: instruction,
-        seller: data.u_id,
-        status: "pending",
-      };
-      firebase
-        .firestore()
-        .collection("inquires")
-        .add(inquiry)
-        .then(() => {
-          console.log("Inquiry sent");
-          navigation.goBack();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
+  function sendInquiry(trans_id, tx_ref) {
+    let inquiry = {
+      buyer: firebase.auth().currentUser.uid,
+      createdAt: new Date(Date.now()).toString(),
+      price: parseInt(data.price),
+      totalPrice: parseInt(data.price) * parseInt(bags),
+      transactionId: trans_id,
+      tx_ref: tx_ref,
+      produce: data.produce,
+      quant: parseInt(bags),
+      ProductID: data.id,
+      instruction: instruction,
+      seller: data.u_id,
+      status: "pending",
+    };
+    firebase
+      .firestore()
+      .collection("inquires")
+      .add(inquiry)
+      .then(() => {
+        console.log("Inquiry sent");
+        navigation.goBack();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
+
+  const config = {
+    public_key: "FLWPUBK_TEST-b843beaf03d0af903cc72d12744b2676-X",
+    tx_ref: Date.now(),
+    amount: parseInt(bags) * parseInt(data.price),
+    currency: "ZMW",
+    payment_options: "mobile_money_zambia",
+    customer: {
+      email: "eliot.alderson20@gmail.com",
+      phonenumber: firebase.auth().currentUser.phoneNumber,
+      name: user.name,
+    },
+    subaccounts: [
+      {
+        id: "RS_A40A6285D1F6E36AD4ED9392A86E70A9",
+        transaction_split_ratio: 2,
+        transaction_charge_type: "percentage",
+        transaction_charge: 0.15,
+      },
+    ],
+    callback: function (data) {
+      console.log(data);
+    },
+    customizations: {
+      title: "Inquiry",
+      description: "Payment for inquiry",
+      logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+    },
+  };
+
+  const handleFlutterPayment = useFlutterwave(config);
 
   return (
     <View
@@ -102,7 +125,7 @@ const Inquiry = ({ route }) => {
         />
         <Text style={{ ...FONTS.h4 }}>Meal instructions</Text>
         <TextInput
-          keyboardType="number-pad"
+          keyboardType="default"
           placeholder="I would prefer :"
           onChangeText={(value) => setInstruction(value)}
           style={{
@@ -121,7 +144,18 @@ const Inquiry = ({ route }) => {
           paddingHorizontal: 30,
           paddingVertical: 20,
         }}
-        onPress={() => sendInquiry()}
+        // onPress={() => sendInquiry()}
+        onPress={() => {
+          handleFlutterPayment({
+            callback: (response) => {
+              console.log(response);
+              sendInquiry(response.transaction_id, response.tx_ref);
+              closePaymentModal();
+              // this will close the modal programmatically
+            },
+            onClose: () => {},
+          });
+        }}
       >
         <Text style={{ color: COLORS.white, textAlign: "right", ...FONTS.h4 }}>
           Make Offer

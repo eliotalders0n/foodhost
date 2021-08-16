@@ -1,34 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   TextInput,
   StyleSheet,
-  ScrollView,
-  Alert,
 } from "react-native";
 import firebase from "../../firebase";
 import { SIZES, FONTS, COLORS } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
-import useGetUser from "../crud/useGetUser";
 
 const updateProfile = ({ route }) => {
   const navigation = useNavigation();
-
-  // let user = useGetUser(firebase.auth().currentUser.uid).docs;
   let user = route.params.user;
 
   console.log(user);
-  // console.log(data);
-  const [username, setusername] = useState(user.username);
   const [name, setname] = useState(user.name);
   const [gender, setgender] = useState(user.gender);
-  const [district, setdistrict] = useState(user.district);
   const [province, setprovince] = useState(user.province);
-  const [type, setusertype] = useState(user.type);
+  const [type, setType] = useState(user.type);
+  const [username, setUsername] = useState(user.username);
+  const [district, setDistrict] = useState(user.district);
 
   // function to request for a verification code
   let userId = firebase.auth().currentUser.uid;
@@ -41,11 +34,11 @@ const updateProfile = ({ route }) => {
       .doc(userId)
       .update({
         name: name,
-        username: username,
         gender: gender,
-        district: district,
         province: province,
         type: type,
+        username: username,
+        district: district,
       })
       .then(() => {
         navigation.goBack();
@@ -56,90 +49,85 @@ const updateProfile = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={require("./../../assets/profile.png")}
-        style={styles.image}
+      <Text style={styles.txth3}>Full Name</Text>
+      <TextInput
+        keyboardType="default"
+        placeholder="enter your full name"
+        placeholderTextColor={COLORS.Gray}
+        style={styles.input}
+        autoCompleteType="name"
+        onChangeText={setname}
+        defaultValue={user && user.name}
       />
-      <Text style={styles.txth1}>Lets update your profile</Text>
-      <Text style={styles.txth2}>
-        {" "}
-        Feel free to edit and update your profile, infact we encourage it.
-      </Text>
-      <View style={styles.detailsContainer}>
-        <View style={styles.personalContainer}>
-          <Text style={styles.txth3}>Full Name</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="Dorian Mutansula"
-            placeholderTextColor={COLORS.Gray}
-            style={styles.input}
-            autoCompleteType="name"
-            onChangeText={setname}
-            defaultValue={user && user.name}
-            // value={user.name}
-          />
-          <Text style={styles.txth3}>User Name</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="Dorain"
-            placeholderTextColor={COLORS.Gray}
-            style={styles.input}
-            autoCompleteType="username"
-            onChangeText={setusername}
-            defaultValue={user && user.username}
-          />
 
-          <Text style={styles.txth3}>Gender</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="Male"
-            placeholderTextColor={COLORS.Gray}
-            style={styles.input}
-            autoCompleteType="name"
-            onChangeText={setgender}
-            defaultValue={user && user.gender}
-          />
-        </View>
+      <Text style={styles.txth3}>Gender</Text>
+      <TextInput
+        keyboardType="default"
+        placeholder="Male | Female"
+        placeholderTextColor={COLORS.Gray}
+        style={styles.input}
+        autoCompleteType="name"
+        onChangeText={setgender}
+        defaultValue={user && user.gender}
+      />
+      <Text style={styles.txth3}>Province</Text>
+      <TextInput
+        keyboardType="default"
+        placeholder="Lusaka / Ndola"
+        placeholderTextColor={COLORS.Gray}
+        style={styles.input}
+        autoCompleteType="name"
+        onChangeText={setprovince}
+        defaultValue={user && user.province}
+      />
 
-        <View style={styles.altContainer}>
-          <Text style={styles.txth3}>Province</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="Lusaka / Ndola"
-            placeholderTextColor={COLORS.Gray}
-            style={styles.input}
-            autoCompleteType="name"
-            onChangeText={setprovince}
-            defaultValue={user && user.province}
-          />
+      <Text style={styles.txth3}>District</Text>
+      <TextInput
+        keyboardType="default"
+        placeholder="enter district"
+        placeholderTextColor={COLORS.Gray}
+        style={styles.input}
+        autoCompleteType="name"
+        onChangeText={setDistrict}
+        defaultValue={user && user.district}
+      />
 
-          <Text style={styles.txth3}>District</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="Lusaka / kabombo"
-            placeholderTextColor={COLORS.Gray}
-            style={styles.input}
-            autoCompleteType="name"
-            onChangeText={setdistrict}
-            defaultValue={user && user.district}
-          />
+      <Text style={styles.txth3}>User Type</Text>
+      <TextInput
+        keyboardType="default"
+        placeholder="Buyer | Seller"
+        placeholderTextColor={COLORS.Gray}
+        style={styles.input}
+        autoCompleteType="name"
+        onChangeText={setType}
+        defaultValue={user && user.type}
+      />
 
-          <Text style={styles.txth3}>User type</Text>
-          <TextInput
-            keyboardType="default"
-            placeholder="Buyer / seller / Transport / Store"
-            placeholderTextColor={COLORS.Gray}
-            style={styles.input}
-            autoCompleteType="name"
-            onChangeText={setusertype}
-            defaultValue={user && user.type}
-          />
-        </View>
-      </View>
+      <Text style={styles.txth3}>Username</Text>
+      <TextInput
+        keyboardType="default"
+        placeholder="enter a username"
+        placeholderTextColor={COLORS.Gray}
+        style={styles.input}
+        autoCompleteType="name"
+        onChangeText={setUsername}
+        defaultValue={user && user.username}
+      />
 
-      {/* </ImageBackground> */}
-      <TouchableOpacity style={styles.button1} onPress={update}>
-        <Text style={styles.buttonText1}>Save</Text>
+      <TouchableOpacity
+        style={{
+          backgroundColor: COLORS.white,
+          marginBottom: 20,
+          marginTop: 40,
+          borderRadius: 10,
+          paddingHorizontal: 30,
+          paddingVertical: 20,
+        }}
+        onPress={() => update()}
+      >
+        <Text style={{ color: COLORS.black, textAlign: "right", ...FONTS.h4 }}>
+          Update Profile
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -149,9 +137,8 @@ const styles = StyleSheet.create({
   container: {
     width: SIZES.width,
     height: SIZES.height,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
+    padding: SIZES.padding * 2,
+    // backgroundColor: "white",
   },
   buttonText1: {
     textAlign: "left",
@@ -209,13 +196,17 @@ const styles = StyleSheet.create({
     marginTop: "5%",
   },
   txth3: {
-    ...FONTS.h4,
-    textAlign: "center",
+    ...FONTS.h5,
+    textAlign: "left",
+    marginTop: 20,
   },
   input: {
+    // padding: SIZES.padding * 2,
+    borderWidth: 0.4,
+    borderRadius: 10,
     padding: 10,
     borderRadius: 10,
-    textAlign: "center",
+    textAlign: "left",
   },
 });
 
