@@ -13,7 +13,8 @@ import { SIZES, FONTS, COLORS } from "../../constants";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import useGetCategories from "../crud/useGetCategories";
-import useGetAllProducts from "../crud/useGetAllProducts";
+// import useGetAllProducts from "../crud/useGetAllProducts";
+import useGetProductsToday from "../crud/useGetProductsToday";
 import SearchItem from "./SearchItem";
 import useSearch from "../crud/useSearch";
 
@@ -23,7 +24,7 @@ function Search() {
   const searchBOx = useRef();
   const searchButton = useRef();
   const navigation = useNavigation();
-  let products = useGetAllProducts().docs;
+  let products = useGetProductsToday().docs;
 
   const [search, setSearch] = useState(null);
   const [status, setStatus] = useState(false);
@@ -204,7 +205,7 @@ function Search() {
             />
           )}
         </View>
-        {searchResults.length !== 0 ? (
+        {/* {searchResults.length !== 0 ? (
           <View>
             <Text style={{ paddingHorizontal: 20, ...FONTS.h5 }}>
               {searchResults.length} {search} results
@@ -218,20 +219,20 @@ function Search() {
               contentContainerStyle={{}}
             />
           </View>
-        ) : (
-          <View style={{ marginTop: 10 }}>
-            {products && (
-              <FlatList
-                data={products}
-                vertical
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(item) => `${item.id}`}
-                renderItem={renderProducts}
-                contentContainerStyle={{}}
-              />
-            )}
-          </View>
-        )}
+        ) : ( */}
+        <View style={{ marginTop: 10 }}>
+          {products && (
+            <FlatList
+              data={products}
+              vertical
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item) => `${item.id}`}
+              renderItem={renderProducts}
+              contentContainerStyle={{}}
+            />
+          )}
+        </View>
+        {/* )} */}
       </View>
     </ScrollView>
   );

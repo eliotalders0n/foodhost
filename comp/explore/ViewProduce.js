@@ -58,6 +58,7 @@ const ViewProduce = ({ route }) => {
       ]);
       console.log("Cant inquire from yourself");
     } else {
+      console.log("inquire navigation");
       navigation.navigate("inquire", { data });
     }
   };

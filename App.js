@@ -104,7 +104,7 @@ const App = () => {
         <Stack.Screen
           name="inquire"
           component={Inquiry}
-          options={{ headerShown: true, title: "" }}
+          options={{ headerShown: true, title: "Inquiry" }}
         />
         <Stack.Screen
           name="manageProduct"

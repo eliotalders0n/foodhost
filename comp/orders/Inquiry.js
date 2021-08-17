@@ -12,8 +12,7 @@ const Inquiry = ({ route }) => {
   let user = useGetUser(data.u_id).docs;
   const [bags, setBags] = useState(null);
   const [instruction, setInstruction] = useState(null);
-  console.log("first number", user.phone);
-  console.log("second number", firebase.auth().currentUser.phoneNumber);
+  console.log("first number", data);
 
   function sendInquiry(trans_id, tx_ref) {
     let inquiry = {
@@ -74,6 +73,7 @@ const Inquiry = ({ route }) => {
 
   const handleFlutterPayment = useFlutterwave(config);
 
+  console.log("second number test before view");
   return (
     <View
       style={{
@@ -101,13 +101,10 @@ const Inquiry = ({ route }) => {
           </Text>
         </View>
       </View>
-      {/* <View>
-                <Text>Am offering to pay K15kwacha for 1 KG, i will need 10 bags of 5KG</Text>
-            </View> */}
       <View style={{ padding: SIZES.padding }}>
         <Text style={{ ...FONTS.h4 }}>Make offer</Text>
         <Text>
-          My current price for 1 plate of {data.produce} is ZMW {data.price}.{" "}
+          My current price for 1 plate of {data.produce} is ZMW {data.price}
           {"\n"}
           {"\n"}
         </Text>
@@ -144,7 +141,6 @@ const Inquiry = ({ route }) => {
           paddingHorizontal: 30,
           paddingVertical: 20,
         }}
-        // onPress={() => sendInquiry()}
         onPress={() => {
           handleFlutterPayment({
             callback: (response) => {
