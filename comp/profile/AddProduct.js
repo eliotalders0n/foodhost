@@ -146,7 +146,7 @@ function AddProduct() {
     let asd = {
       produce_category: ItemName,
       produce: subItem,
-      createdAt: new Date(Date.now()).toString(),
+      createdAt: new Date(Date.now()).toString().slice(0, 15),
       price: price,
       items: parseInt(items),
       latitude: latitude,

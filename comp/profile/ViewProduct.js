@@ -21,7 +21,7 @@ const ViewProduct = ({ route }) => {
   let data = route.params.item;
   const [url, setUrl] = useState(null);
   const [modalVisible, setModalVisibility] = useState(false);
-  const [image, setImage] = useState(null);
+  const [date, setDate] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [uploadUrl, setImageUrl] = useState();
   const [progress, setProgress] = useState(0);
@@ -35,6 +35,24 @@ const ViewProduct = ({ route }) => {
         console.log("deleted");
         navigation.goBack();
       });
+  }
+
+  function rewind() {
+    let asd = {
+      createdAt: new Date(Date.now()).toString().slice(0, 15),
+    };
+    firebase
+      .firestore()
+      .collection("products")
+      .doc(data.id)
+      .update(asd)
+      .then(() => {
+        navigation.navigate("manageProduct");
+      });
+    console.log(
+      " stuff happened ",
+      new Date(Date.now()).toString().slice(0, 15)
+    );
   }
 
   const pickImage = async (tag) => {
@@ -252,6 +270,20 @@ const ViewProduct = ({ route }) => {
             }}
           >
             <Feather name="image" color="white" size={24} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => rewind()}
+            style={{
+              flex: 1,
+              borderRadius: 10,
+              padding: SIZES.padding * 2,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: COLORS.secondary,
+              marginHorizontal: 5,
+            }}
+          >
+            <Feather name="rewind" color="white" size={24} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => DeleteItem()}
