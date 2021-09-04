@@ -1,18 +1,24 @@
-import React from 'react'
-import firebase from '../../firebase'
+import React from "react";
+import firebase from "../../firebase";
 
-const useGetUser  =(id) => {
+const useGetUser = (id) => {
+  const [docs, setDocs] = React.useState([]);
 
-    const[docs, setDocs] = React.useState([])
+  React.useEffect(() => {
+    const unsub = firebase
+      .firestore()
+      .collection("users")
+      .doc(id)
+      .onSnapshot((doc) => {
+        let asd = {
+          id: doc.id,
+          ...doc.data(),
+        };
+        setDocs(asd);
+      });
+  }, []);
 
-    React.useEffect(() => {     
+  return { docs };
+};
 
-      const unsub =  firebase.firestore().collection("users").doc(id).onSnapshot((doc)=>{        
-          setDocs(doc.data())
-      })     
-    }, [])
-
-    return {docs}
-}
-
-export default useGetUser
+export default useGetUser;

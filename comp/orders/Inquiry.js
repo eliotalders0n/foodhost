@@ -12,16 +12,16 @@ const Inquiry = ({ route }) => {
   let user = useGetUser(data.u_id).docs;
   const [bags, setBags] = useState(null);
   const [instruction, setInstruction] = useState(null);
-  console.log("first number", data);
+  console.log("first number", user.phone);
+  console.log("second number", firebase.auth().currentUser.phoneNumber);
 
-  function sendInquiry(trans_id, tx_ref) {
+  // function sendInquiry(trans_id, tx_ref) {
+  function sendInquiry() {
     let inquiry = {
       buyer: firebase.auth().currentUser.uid,
       createdAt: new Date(Date.now()).toString(),
       price: parseInt(data.price),
       totalPrice: parseInt(data.price) * parseInt(bags),
-      transactionId: trans_id,
-      tx_ref: tx_ref,
       produce: data.produce,
       quant: parseInt(bags),
       ProductID: data.id,
@@ -71,9 +71,8 @@ const Inquiry = ({ route }) => {
     },
   };
 
-  const handleFlutterPayment = useFlutterwave(config);
+  // const handleFlutterPayment = useFlutterwave(config);
 
-  console.log("second number test before view");
   return (
     <View
       style={{
@@ -101,10 +100,13 @@ const Inquiry = ({ route }) => {
           </Text>
         </View>
       </View>
+      {/* <View>
+                <Text>Am offering to pay K15kwacha for 1 KG, i will need 10 bags of 5KG</Text>
+            </View> */}
       <View style={{ padding: SIZES.padding }}>
         <Text style={{ ...FONTS.h4 }}>Make offer</Text>
         <Text>
-          My current price for 1 plate of {data.produce} is ZMW {data.price}
+          My current price for 1 plate of {data.produce} is ZMW {data.price}.{" "}
           {"\n"}
           {"\n"}
         </Text>
@@ -141,17 +143,18 @@ const Inquiry = ({ route }) => {
           paddingHorizontal: 30,
           paddingVertical: 20,
         }}
-        onPress={() => {
-          handleFlutterPayment({
-            callback: (response) => {
-              console.log(response);
-              sendInquiry(response.transaction_id, response.tx_ref);
-              closePaymentModal();
-              // this will close the modal programmatically
-            },
-            onClose: () => {},
-          });
-        }}
+        onPress={() => sendInquiry()}
+        // onPress={() => {
+        //   handleFlutterPayment({
+        //     callback: (response) => {
+        //       console.log(response);
+        //       sendInquiry(response.transaction_id, response.tx_ref);
+        //       closePaymentModal();
+        //       // this will close the modal programmatically
+        //     },
+        //     onClose: () => {},
+        //   });
+        // }}
       >
         <Text style={{ color: COLORS.white, textAlign: "right", ...FONTS.h4 }}>
           Make Offer

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
+import { SIZES } from "./constants";
 import Tabs from "./navigation/tabs";
 import firebase_ from "./firebase";
 import AddProduct from "./comp/profile/AddProduct";
@@ -15,10 +16,14 @@ import Welcome from "./comp/signin/Welcome";
 
 import Inquiry from "./comp/orders/Inquiry";
 import EditProduct from "./comp/profile/EditProduct";
-import { View, Text, LogBox } from "react-native";
+import { View, Text, LogBox, StyleSheet, Image } from "react-native";
 import updateProfile from "./comp/profile/UpdateProfile";
 import Inquiries from "./comp/profile/Inquiries";
 import Feedback from "./comp/profile/Feedback";
+import StoreDetails from "./comp/profile/StoreDetails";
+import ManageStore from "./comp/profile/ManageStore";
+import AddAmenities from "./comp/profile/AddAmenities";
+
 // console.disableYellowBox = true;
 const Stack = createStackNavigator();
 const App = () => {
@@ -50,8 +55,8 @@ const App = () => {
 
   if (!loaded_) {
     return (
-      <View>
-        <Text>Loading</Text>
+      <View style={styles.container}>
+        <Image source={require("./assets/img.png")} style={styles.image} />
       </View>
     );
   }
@@ -141,10 +146,44 @@ const App = () => {
           Flutterwave
           component={Feedback}
           options={{ headerShown: true, title: "Feedback" }}
+          storeDetails
+        />
+        <Stack.Screen
+          name="StoreDetails"
+          Flutterwave
+          component={StoreDetails}
+          options={{ headerShown: true, title: "Store Details" }}
+        />
+        <Stack.Screen
+          name="ManageStore"
+          Flutterwave
+          component={ManageStore}
+          options={{ headerShown: true, title: "Manage Store" }}
+        />
+        <Stack.Screen
+          name="AddAmenities"
+          Flutterwave
+          component={AddAmenities}
+          options={{ headerShown: true, title: "Manage Store" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+const styles = StyleSheet.create({
+  image: {
+    marginTop: "20%",
+    width: 220,
+    height: 220,
+    borderRadius: 100,
+  },
+  container: {
+    width: SIZES.width,
+    height: SIZES.height,
+    alignItems: "center",
+    backgroundColor: "white",
+    justifyContent: "center",
+  },
+});
 
 export default App;
