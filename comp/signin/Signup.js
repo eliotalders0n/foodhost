@@ -35,6 +35,49 @@ const Signup = ({ navigation }) => {
       .then(setVerificationId);
   };
 
+  const [Essentials] = useState(false);
+  const [Locationfeatures] = useState(false);
+  const [Parking] = useState(false);
+  const [internet] = useState(false);
+  const [entertainment] = useState(false);
+  const [smoking] = useState(false);
+  const [drinking] = useState(false);
+  const [littering] = useState(false);
+  const [cancellation] = useState(false);
+  const [locationdirections] = useState(null);
+  const [otherInstruction] = useState(null);
+
+  // function to request for a verification code
+  // do something amazing
+
+  function update() {
+    let asd = {
+      Essentials: Essentials,
+      Locationfeatures: Locationfeatures,
+      Parking: Parking,
+      internet: internet,
+      entertainment: entertainment,
+      smoking: smoking,
+      drinking: drinking,
+      littering: littering,
+      cancellation: cancellation,
+      locationdirections: locationdirections,
+      otherInstruction: otherInstruction,
+      u_id: firebase.auth().currentUser.uid,
+    };
+    firebase
+      .firestore()
+      .collection("amenities")
+      .add(asd)
+      .then(() => {
+        console.log("Item added");
+        // navigation.goBack();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
   const confirmCode = () => {
     const credential = firebase.auth.PhoneAuthProvider.credential(
       verificationId,
@@ -81,7 +124,7 @@ const Signup = ({ navigation }) => {
         <Text style={styles.label}>Username</Text>
         <TextInput
           keyboardType="default"
-          placeholder="Harry Mwanga Nkumbula"
+          placeholder="Enter user namer here"
           placeholderTextColor="rgb(135, 135, 135)"
           //   caption={errors.email.length > 0 && errors.email}
           //   status={errors.email.length > 0 ? "danger" : ""}
@@ -92,7 +135,7 @@ const Signup = ({ navigation }) => {
         <Text style={styles.label}>Full Name</Text>
         <TextInput
           keyboardType="default"
-          placeholder="*Idah Chama"
+          placeholder="*Enter full name here"
           placeholderTextColor="rgb(135, 135, 135)"
           style={styles.input}
           onChangeText={setname}
@@ -112,7 +155,7 @@ const Signup = ({ navigation }) => {
         <Text style={styles.label}>District</Text>
         <TextInput
           keyboardType="default"
-          placeholder="Kabwata"
+          placeholder="Enter district here"
           placeholderTextColor="rgb(135, 135, 135)"
           style={styles.input}
           onChangeText={setdistrict}
@@ -121,7 +164,7 @@ const Signup = ({ navigation }) => {
         <Text style={styles.label}>Province</Text>
         <TextInput
           keyboardType="default"
-          placeholder="Lusaka"
+          placeholder="Enter your province here"
           placeholderTextColor="rgb(135, 135, 135)"
           style={styles.input}
           onChangeText={setprovince}
@@ -140,7 +183,7 @@ const Signup = ({ navigation }) => {
       <Text style={styles.label}>Phone</Text>
       <TextInput
         keyboardType="default"
-        placeholder="+260 97X XXX XXX"
+        placeholder="phone number e.g. 0977 123 456"
         placeholderTextColor="rgb(135, 135, 135)"
         autoCompleteType="tel"
         style={styles.input}

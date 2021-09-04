@@ -13,11 +13,15 @@ import { SIZES, FONTS, COLORS } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import useGetUser from "../crud/useGetUser";
+import useGetProduct from "../crud/useGetProduct";
 
 const ViewProduce = ({ route }) => {
-  let data = route.params.item;
-  console.log(route);
-  let item = useGetUser(data.u_id).docs;
+  let id = route.params.item;
+  let data = useGetProduct(id.id).docs;
+  console.log("products XXX : ", data);
+  console.log("params : ", id);
+  let item = useGetUser(id.u_id).docs;
+  console.log("from item: ", item);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -47,21 +51,57 @@ const ViewProduce = ({ route }) => {
     </TouchableOpacity>
   );
   const checkUser = () => {
-    if (data.u_id == firebase.auth().currentUser.uid) {
-      Alert.alert("Denied", "Cant inquire from yourself", [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        { text: "OK", onPress: () => navigation.goBack() },
-      ]);
-      console.log("Cant inquire from yourself");
+    if (data.u_id !== firebase.auth().currentUser.uid) {
+      return (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("inquire", { data })}
+          style={{
+            flex: 1,
+            width: SIZES.width,
+            borderRadius: 10,
+            backgroundColor: COLORS.black,
+            marginHorizontal: 5,
+          }}
+        >
+          <Text
+            style={{
+              color: COLORS.white,
+              ...FONTS.h5,
+              padding: SIZES.padding * 2,
+              textAlign: "center",
+            }}
+          >
+            Inquire from {item && item.name}
+          </Text>
+        </TouchableOpacity>
+      );
     } else {
-      console.log("inquire navigation");
-      navigation.navigate("inquire", { data });
+      return (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("editProduct", { data })}
+          style={{
+            flex: 1,
+            width: SIZES.width,
+            borderRadius: 10,
+            backgroundColor: COLORS.secondary,
+            marginHorizontal: 5,
+          }}
+        >
+          <Text
+            style={{
+              color: COLORS.white,
+              ...FONTS.h5,
+              padding: SIZES.padding * 2,
+              textAlign: "center",
+            }}
+          >
+            Edit this meal
+          </Text>
+        </TouchableOpacity>
+      );
     }
   };
+
   return (
     <ScrollView style={{ backgroundColor: COLORS.white }}>
       <View
@@ -122,28 +162,8 @@ const ViewProduce = ({ route }) => {
           >
             {data.delivery === "0" ? "Stationary" : "Mobile"}
           </Text>
-          <View style={{ flexDirection: "row", marginVertical: 20 }}>
-            <TouchableOpacity
-              onPress={() => checkUser()}
-              style={{
-                flex: 1,
-                borderRadius: 10,
-                backgroundColor: COLORS.secondary,
-                marginHorizontal: 5,
-              }}
-            >
-              <Text
-                style={{
-                  color: COLORS.white,
-                  ...FONTS.h5,
-                  padding: SIZES.padding * 2,
-                  textAlign: "center",
-                }}
-              >
-                Inquiry from {item.name}
-              </Text>
-              {/* need to make this change depending on whether the current user is the one that uploaded it. */}
-            </TouchableOpacity>
+          <View style={{ flexDirection: "row", flex: 1, marginVertical: 20 }}>
+            {checkUser()}
           </View>
         </View>
 
@@ -175,7 +195,7 @@ const ViewProduce = ({ route }) => {
                 textAlign: "center",
               }}
             >
-              {data.price}
+              K{data.price}
             </Text>
           </View>
           <View

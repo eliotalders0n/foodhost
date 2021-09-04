@@ -9,8 +9,10 @@ import {
 import { SIZES, COLORS, FONTS } from "../../constants";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import firebase from "../../firebase";
+import { useNavigation } from "@react-navigation/native";
 
 function Signin() {
+  let navigation = useNavigation();
   const [phoneNumber, setPhoneNumber] = useState("");
   const recaptchaVerifire = useRef(null);
   const [verificationId, setVerificationId] = useState(null);
@@ -72,6 +74,14 @@ function Signin() {
       <TouchableOpacity style={styles.buttonLogin} onPress={confirmCode}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonLogin_}
+        onPress={() => navigation.navigate("Register")}
+      >
+        <Text style={styles.buttonLoginText}>
+          Press here to create an account.
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -116,6 +126,11 @@ const styles = StyleSheet.create({
     padding: 3,
     margin: 3,
     marginTop: 50,
+  },
+  buttonLoginText: {
+    color: COLORS.black,
+    textAlign: "center",
+    ...FONTS.h5,
   },
   buttonLogin: {
     backgroundColor: COLORS.black,

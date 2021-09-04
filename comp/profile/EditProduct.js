@@ -16,10 +16,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import uuid from "uuid";
+// import pickImage from "../crud/pickImage";
 
 const EditProduct = ({ route }) => {
-  let data = route.params.item;
-  console.log(data.price);
+  let data = route.params.data;
+  console.log("Graaahh", data.price);
   const [price, setPrice] = useState(data.price);
   const [items, setItems] = useState(data.items);
   const [delivery, setDelivery] = useState(data.delivery);
@@ -92,6 +93,22 @@ const EditProduct = ({ route }) => {
 
   return (
     <ScrollView style={{ flex: 1 }}>
+      <View
+        style={{
+          justifyContent: "center",
+          height: "20%",
+          alignItems: "center",
+          backgroundColor: COLORS.secondary,
+        }}
+      >
+        <TouchableOpacity
+          // onPress={() => pickImage(1)}
+          style={{ padding: SIZES.padding }}
+        >
+          <Text style={{ ...FONTS.h4, color: "white" }}>Add Poster Image</Text>
+        </TouchableOpacity>
+      </View>
+
       <View style={{ padding: SIZES.padding * 2 }}>
         <Text style={{ ...FONTS.h5 }}>
           Update the price and stock of your item below.

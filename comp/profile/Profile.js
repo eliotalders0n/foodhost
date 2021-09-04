@@ -11,10 +11,12 @@ import { SIZES, FONTS, COLORS } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import useGetUser from "../crud/useGetUser";
+import useGetStore from "../crud/useGetStore";
 
 function profile() {
   const navigation = useNavigation();
   let user = useGetUser(firebase.auth().currentUser.uid).docs;
+  // let store = useGetStore().docs;
   //buyer, farmer, transporter
   // console.log(user);
 
@@ -139,6 +141,15 @@ function profile() {
         </TouchableOpacity>
       </View>
       <View>
+        {/* <TouchableOpacity
+          onPress={() => navigation.navigate("StoreDetails", { store })}
+          style={styles.TouchableOp}
+        >
+          <Text style={styles.TextNav}>Manage Store</Text>
+          <Text style={styles.TextFoot}>
+            edit and update your store details
+          </Text>
+        </TouchableOpacity> */}
         <TouchableOpacity
           onPress={() => navigation.navigate("updateProfile", { user })}
           style={styles.TouchableOp}

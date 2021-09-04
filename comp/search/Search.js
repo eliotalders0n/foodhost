@@ -63,14 +63,14 @@ function Search() {
           paddingVertical: 10,
           marginLeft: 10,
           borderRadius: 10,
-          backgroundColor: "rgba(0, 0, 0, 0.1)",
+          backgroundColor: "rgb(255, 255, 255)",
         }}
       >
         <Text
           style={{
             paddingHorizontal: 20,
             ...FONTS.h5,
-            color: COLORS.white,
+            color: COLORS.black,
           }}
         >
           {item.produce}
@@ -79,7 +79,7 @@ function Search() {
           style={{
             paddingHorizontal: 20,
             ...FONTS.h6,
-            color: COLORS.white,
+            color: COLORS.black,
           }}
         >
           {item.produce_category}
@@ -88,7 +88,7 @@ function Search() {
           style={{
             paddingHorizontal: 20,
             ...FONTS.h6,
-            color: COLORS.white,
+            color: COLORS.black,
           }}
         >
           Price: {item.price}
