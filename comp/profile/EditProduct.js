@@ -14,13 +14,15 @@ import firebase from "../../firebase";
 import { SIZES, FONTS, COLORS } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
+import useGetUserProduce from "../crud/useGetUserProduce";
 import * as ImagePicker from "expo-image-picker";
 import uuid from "uuid";
 // import pickImage from "../crud/pickImage";
 
 const EditProduct = ({ route }) => {
   let data = route.params.data;
-  console.log("Graaahh", data.price);
+  // let data = useGetUserProduce(user.id).docs;
+  console.log("Graaahh", data);
   const [price, setPrice] = useState(data.price);
   const [items, setItems] = useState(data.items);
   const [delivery, setDelivery] = useState(data.delivery);
@@ -72,6 +74,7 @@ const EditProduct = ({ route }) => {
     setItemname(item.name);
     setSubItem(null);
     setSubItems(item.items);
+    items;
   }
 
   function updateProduce() {
