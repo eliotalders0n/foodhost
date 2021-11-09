@@ -35,7 +35,7 @@
         "android.permission.WRITE_EXTERNAL_STORAGE",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.eightyeight.farmershome"
+      "package": "com.eightyeight.foodhosts"
     },
     "web": {
       "favicon": "./assets/favicon.png"

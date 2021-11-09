@@ -1,7 +1,7 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -9,13 +9,14 @@
   },
   "dependencies": {
     "@react-native-community/geolocation": "^1.4.2",
+    "@react-native-picker/picker": "^2.1.0",
     "@react-native-seoul/masonry-list": "^1.0.6",
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/elements": "^1.0.1",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
     "@reduxjs/toolkit": "^1.6.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "expo": "~42.0.1",
     "expo-firebase-recaptcha": "^1.4.2",
     "expo-font": "~9.2.1",
@@ -36,7 +37,7 @@
     "react-native-pager-view": "^5.0.12",
     "react-native-screens": "~3.4.0",
     "react-native-tab-view": "^3.1.1",
-    "react-native-web": "~0.13.12",
+    "react-native-web": "^0.17.5",
     "react-native-webview": "11.6.2",
     "react-navigation": "^4.4.4",
     "redux": "^4.1.1"

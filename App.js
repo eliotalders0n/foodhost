@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SIZES } from "./constants";
 import Tabs from "./navigation/tabs";
-import firebase_ from "./firebase";
+import firebase from "./firebase";
+
 import AddProduct from "./comp/profile/AddProduct";
 import ManageProducts from "./comp/profile/ManageProducts";
 import ViewProduct from "./comp/profile/ViewProduct";
@@ -26,12 +27,13 @@ import AddAmenities from "./comp/profile/AddAmenities";
 
 // console.disableYellowBox = true;
 const Stack = createStackNavigator();
+
 const App = () => {
   const [loaded_, setLoaded] = useState(false);
   const [loggedin, setLoggedin] = useState(false);
 
   useEffect(() => {
-    firebase_.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         setLoaded(true);
         setLoggedin(false);
@@ -84,6 +86,7 @@ const App = () => {
       </NavigationContainer>
     );
   }
+
   return (
     // <View>
     //   <updateProfile />

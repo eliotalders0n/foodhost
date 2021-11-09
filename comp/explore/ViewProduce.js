@@ -17,24 +17,24 @@ import useGetProduct from "../crud/useGetProduct";
 
 const ViewProduce = ({ route }) => {
   let id = route.params.item;
-  let data = useGetProduct(id.id).docs;
-  console.log("products XXX : ", data);
+  let item = useGetProduct(id.id).docs;
+  console.log("products XXX : ", item);
   console.log("params : ", id);
-  let item = useGetUser(id.u_id).docs;
-  console.log("from item: ", item);
+  let data = useGetUser(id.u_id).docs;
+  console.log("from item: ", data);
   const navigation = useNavigation();
 
   useEffect(() => {
     firebase
       .firestore()
       .collection("products")
-      .doc(data.id)
+      .doc(item.id)
       .update({
         views: firebase.firestore.FieldValue.increment(1),
       });
   }, []);
 
-  const renderItem = ({ item }) => (
+  const renderItem = ({ data }) => (
     <TouchableOpacity
       style={{
         paddingVertical: 10,
@@ -45,16 +45,16 @@ const ViewProduce = ({ route }) => {
       <Image
         style={{ flex: 1, height: 220, borderRadius: 10, resizeMode: "cover" }}
         source={{
-          uri: item,
+          uri: data,
         }}
       />
     </TouchableOpacity>
   );
   const checkUser = () => {
-    if (data.u_id !== firebase.auth().currentUser.uid) {
+    if (item.u_id !== firebase.auth().currentUser.uid) {
       return (
         <TouchableOpacity
-          onPress={() => navigation.navigate("inquire", { data })}
+          onPress={() => navigation.navigate("inquire", { item })}
           style={{
             flex: 1,
             width: SIZES.width,
@@ -71,14 +71,14 @@ const ViewProduce = ({ route }) => {
               textAlign: "center",
             }}
           >
-            Inquire from {item && item.name}
+            Inquire from {data && data.name}
           </Text>
         </TouchableOpacity>
       );
     } else {
       return (
         <TouchableOpacity
-          onPress={() => navigation.navigate("editProduct", { data })}
+          onPress={() => navigation.navigate("editProduct", { item })}
           style={{
             flex: 1,
             width: SIZES.width,
@@ -120,7 +120,7 @@ const ViewProduce = ({ route }) => {
               resizeMode: "cover",
             }}
             source={{
-              uri: data.images,
+              uri: item.images,
             }}
           />
         </View>
@@ -142,7 +142,7 @@ const ViewProduce = ({ route }) => {
               fontWeight: "900",
             }}
           >
-            {data.produce}
+            {item.produce}
           </Text>
           <Text
             style={{
@@ -151,7 +151,7 @@ const ViewProduce = ({ route }) => {
               textAlign: "center",
             }}
           >
-            {data.produce_category}
+            {item.produce_category}
           </Text>
           <Text
             style={{
@@ -160,7 +160,7 @@ const ViewProduce = ({ route }) => {
               textAlign: "center",
             }}
           >
-            {data.delivery === "0" ? "Stationary" : "Mobile"}
+            {item.delivery === "0" ? "Stationary" : "Mobile"}
           </Text>
           <View style={{ flexDirection: "row", flex: 1, marginVertical: 20 }}>
             {checkUser()}
@@ -195,7 +195,7 @@ const ViewProduce = ({ route }) => {
                 textAlign: "center",
               }}
             >
-              K{data.price}
+              K{item.price}
             </Text>
           </View>
           <View
@@ -225,18 +225,18 @@ const ViewProduce = ({ route }) => {
                 textAlign: "center",
               }}
             >
-              {data.items}
+              {item.items}
             </Text>
           </View>
         </View>
 
         <Text style={{ ...FONTS.h4, marginVertical: 20 }}>Gallery</Text>
-        {data && (
+        {item && (
           <FlatList
-            data={data.gallery}
+            data={item.gallery}
             veertical
             showsHorizontalScrollIndicator={false}
-            keyExtractor={(item) => `${item}`}
+            keyExtractor={(data) => `${data}`}
             renderItem={renderItem}
             contentContainerStyle={{}}
           />
