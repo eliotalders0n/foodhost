@@ -15,14 +15,19 @@ import { SIZES, FONTS, COLORS } from "../../constants";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import useGetUserProduce from "../crud/useGetUserProduce";
+import useGetProduct from "../crud/useGetProduct";
 import * as ImagePicker from "expo-image-picker";
 import uuid from "uuid";
 // import pickImage from "../crud/pickImage";
 
 const EditProduct = ({ route }) => {
-  let data = route.params.data;
-  // let data = useGetUserProduce(user.id).docs;
-  console.log("Graaahh", data);
+  let data = route.params.item;
+  let user = firebase.auth().currentUser.uid;
+  // let data = useGetUserProduce(user).docs;
+  // let data = useGetProduct(id.id).docs;
+
+  // console.log("Graaahh", user, data);
+  console.log("data", data.price, data.items);
   const [price, setPrice] = useState(data.price);
   const [items, setItems] = useState(data.items);
   const [delivery, setDelivery] = useState(data.delivery);
@@ -80,7 +85,7 @@ const EditProduct = ({ route }) => {
   function updateProduce() {
     let asd = {
       updatedAt: new Date(Date.now()).toString(),
-      price: price,
+      price: parseInt(price),
       items: parseInt(items),
       delivery: delivery,
     };
@@ -96,7 +101,7 @@ const EditProduct = ({ route }) => {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <View
+      {/* <View
         style={{
           justifyContent: "center",
           height: "20%",
@@ -110,33 +115,35 @@ const EditProduct = ({ route }) => {
         >
           <Text style={{ ...FONTS.h4, color: "white" }}>Add Poster Image</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       <View style={{ padding: SIZES.padding * 2 }}>
         <Text style={{ ...FONTS.h5 }}>
           Update the price and stock of your item below.
         </Text>
 
-        <View style={{}}>
+        <View style={{ flex: 1 }}>
           <Text style={{ ...FONTS.h5, marginTop: 20, color: COLORS.black }}>
-            Price
+            Price {price}
           </Text>
           <TextInput
             keyboardType="number-pad"
             placeholder="How much does it cost"
-            defaultValue={data.price}
             onChangeText={(value) => setPrice(value)}
             style={{
               padding: SIZES.padding * 2,
               borderWidth: 0.4,
               borderRadius: 10,
             }}
+            defaultValue={data && data.price}
           />
-          <Text style={{ ...FONTS.h5, marginTop: 10 }}>Items Available</Text>
+          <Text style={{ ...FONTS.h5, marginTop: 10 }}>
+            Items Available {items}
+          </Text>
           <TextInput
             keyboardType="number-pad"
             placeholder="What do you have available"
-            defaultValue={data.items}
+            defaultValue={data && data.items}
             onChangeText={(value) => setItems(value)}
             style={{
               padding: SIZES.padding * 2,

@@ -153,7 +153,7 @@ function Inquiries() {
       </Text>
 
       <Text style={{ paddingHorizontal: 10, ...FONTS.h5, color: COLORS.dark }}>
-        Prefered meal, instruction : {item.instruction}
+        Prefered meal instruction : {item.instruction}
       </Text>
 
       {item.status === "pending" ? (
