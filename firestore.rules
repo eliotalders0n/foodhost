@@ -1,0 +1,248 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSelf(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isParticipant(data) {
+      return isSignedIn() &&
+        (
+          (data.participants is list &&
+            request.auth.uid in data.participants) ||
+          data.buyerId == request.auth.uid ||
+          data.sellerId == request.auth.uid
+        );
+    }
+
+    function isProfilePayload(data, userId) {
+      return data.keys().hasOnly([
+          'accountType',
+          'createdAt',
+          'displayName',
+          'district',
+          'email',
+          'province',
+          'uid',
+          'updatedAt',
+        ]) &&
+        data.keys().hasAll([
+          'accountType',
+          'displayName',
+          'district',
+          'email',
+          'province',
+          'uid',
+        ]) &&
+        data.uid == userId &&
+        data.email is string &&
+        data.email == request.auth.token.email &&
+        data.displayName is string &&
+        data.displayName.size() >= 2 &&
+        data.district is string &&
+        data.district.size() >= 2 &&
+        data.province is string &&
+        data.province.size() >= 2 &&
+        data.accountType in ['seller', 'buyer'];
+    }
+
+    function isListingPayload(data) {
+      return data.keys().hasOnly([
+          'addOns',
+          'category',
+          'coordinates',
+          'createdAt',
+          'description',
+          'imagePath',
+          'imageUrl',
+          'locationSummary',
+          'pickupPoint',
+          'price',
+          'quantity',
+          'sellerId',
+          'sellerName',
+          'status',
+          'title',
+          'updatedAt',
+        ]) &&
+        data.keys().hasAll([
+          'addOns',
+          'category',
+          'coordinates',
+          'description',
+          'imagePath',
+          'imageUrl',
+          'locationSummary',
+          'pickupPoint',
+          'price',
+          'quantity',
+          'sellerId',
+          'sellerName',
+          'status',
+          'title',
+        ]) &&
+        data.addOns is list &&
+        data.category is string &&
+        data.category.size() >= 2 &&
+        data.coordinates is map &&
+        data.coordinates.keys().hasOnly(['latitude', 'longitude']) &&
+        data.coordinates.latitude is number &&
+        data.coordinates.latitude >= -90 &&
+        data.coordinates.latitude <= 90 &&
+        data.coordinates.longitude is number &&
+        data.coordinates.longitude >= -180 &&
+        data.coordinates.longitude <= 180 &&
+        data.description is string &&
+        data.description.size() >= 8 &&
+        (data.imagePath == null || data.imagePath is string) &&
+        (data.imageUrl == null || data.imageUrl is string) &&
+        data.locationSummary is string &&
+        data.locationSummary.size() >= 2 &&
+        data.pickupPoint is string &&
+        data.pickupPoint.size() >= 2 &&
+        data.price is number &&
+        data.price > 0 &&
+        data.quantity is int &&
+        data.quantity >= 0 &&
+        data.sellerId == request.auth.uid &&
+        data.sellerName is string &&
+        data.sellerName.size() >= 2 &&
+        data.status in ['active', 'paused'] &&
+        data.title is string &&
+        data.title.size() >= 2;
+    }
+
+    function isInquiryPayload(data) {
+      return data.keys().hasOnly([
+          'buyerEmail',
+          'buyerId',
+          'buyerName',
+          'createdAt',
+          'listingAddOnsTotal',
+          'listingId',
+          'listingImageUrl',
+          'listingPrice',
+          'listingTitle',
+          'message',
+          'participants',
+          'paymentFailureReason',
+          'paymentMessage',
+          'paymentReference',
+          'paymentStatus',
+          'paymentTransactionId',
+          'requestedQuantity',
+          'selectedAddOns',
+          'sellerId',
+          'sellerName',
+          'status',
+          'totalPrice',
+          'unitPrice',
+          'updatedAt',
+        ]) &&
+        data.keys().hasAll([
+          'buyerEmail',
+          'buyerId',
+          'buyerName',
+          'listingAddOnsTotal',
+          'listingId',
+          'listingImageUrl',
+          'listingPrice',
+          'listingTitle',
+          'message',
+          'participants',
+          'paymentFailureReason',
+          'paymentMessage',
+          'paymentReference',
+          'paymentStatus',
+          'paymentTransactionId',
+          'requestedQuantity',
+          'selectedAddOns',
+          'sellerId',
+          'sellerName',
+          'status',
+          'totalPrice',
+          'unitPrice',
+        ]) &&
+        data.buyerEmail is string &&
+        data.buyerId == request.auth.uid &&
+        data.buyerName is string &&
+        data.buyerName.size() >= 2 &&
+        data.listingAddOnsTotal is number &&
+        data.listingAddOnsTotal >= 0 &&
+        data.listingId is string &&
+        data.listingId.size() > 0 &&
+        (data.listingImageUrl == null || data.listingImageUrl is string) &&
+        data.listingPrice is number &&
+        data.listingPrice > 0 &&
+        data.listingTitle is string &&
+        data.listingTitle.size() >= 2 &&
+        data.message is string &&
+        data.participants is list &&
+        data.participants.size() == 2 &&
+        data.participants.hasAll([request.auth.uid, data.sellerId]) &&
+        data.paymentFailureReason == null &&
+        data.paymentMessage == null &&
+        data.paymentReference == null &&
+        data.paymentStatus == 'not-started' &&
+        data.paymentTransactionId == null &&
+        data.requestedQuantity is int &&
+        data.requestedQuantity > 0 &&
+        data.selectedAddOns is list &&
+        data.sellerId is string &&
+        data.sellerId != request.auth.uid &&
+        data.sellerName is string &&
+        data.sellerName.size() >= 2 &&
+        data.status == 'pending' &&
+        data.totalPrice is number &&
+        data.totalPrice > 0 &&
+        data.unitPrice is number &&
+        data.unitPrice > 0;
+    }
+
+    match /profiles/{userId} {
+      allow read: if isSelf(userId);
+      allow create, update: if isSelf(userId) &&
+        isProfilePayload(request.resource.data, userId);
+    }
+
+    match /listings/{listingId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isListingPayload(request.resource.data);
+      allow update: if isSignedIn() &&
+        resource.data.sellerId == request.auth.uid &&
+        request.resource.data.sellerId == resource.data.sellerId &&
+        isListingPayload(request.resource.data);
+      allow delete: if isSignedIn() && resource.data.sellerId == request.auth.uid;
+    }
+
+    match /inquiries/{inquiryId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isInquiryPayload(request.resource.data);
+      allow update: if isSignedIn() &&
+        resource.data.sellerId == request.auth.uid &&
+        request.resource.data.diff(resource.data).changedKeys().hasOnly([
+          'status',
+          'updatedAt',
+        ]) &&
+        resource.data.status == 'pending' &&
+        request.resource.data.status in ['accepted', 'declined'];
+    }
+
+    match /notifications/{notificationId} {
+      allow read: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow write: if false;
+    }
+
+    match /momo_transactions/{transactionId} {
+      allow read: if isSignedIn() &&
+        (resource.data.userId == request.auth.uid ||
+          resource.data.buyerId == request.auth.uid ||
+          resource.data.sellerId == request.auth.uid);
+      allow write: if false;
+    }
+  }
+}

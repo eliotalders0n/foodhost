@@ -1,0 +1,355 @@
+{
+  "groups": [
+    {
+      "title": "Local Plates",
+      "items": [
+        {
+          "name": "Nshima with Beef Stew",
+          "description": "Classic nshima served with rich tomato-based beef stew"
+        },
+        {
+          "name": "Nshima with Chicken Stew",
+          "description": "Nshima paired with tender chicken in flavorful gravy"
+        },
+        {
+          "name": "Nshima with Ifisashi",
+          "description": "Traditional peanut-based vegetable stew with nshima"
+        },
+        {
+          "name": "Village Chicken",
+          "description": "Slow-cooked free-range chicken with deep flavor"
+        },
+        {
+          "name": "Kapenta with Nshima",
+          "description": "Dried fish cooked in tomato or groundnut sauce"
+        },
+        {
+          "name": "Beans and Nshima",
+          "description": "Hearty beans cooked in sauce served with nshima"
+        },
+        {
+          "name": "Chikanda",
+          "description": "Zambian traditional orchid-based delicacy"
+        },
+        {
+          "name": "Okra with Nshima",
+          "description": "Slimy okra cooked in tomato sauce with nshima"
+        },
+        {
+          "name": "Cassava Meal",
+          "description": "Cassava-based nshima served with relish"
+        },
+        {
+          "name": "Mixed Relish Plate",
+          "description": "Nshima served with a variety of relishes"
+        }
+      ]
+    },
+    {
+      "title": "Rice and Pasta",
+      "items": [
+        {
+          "name": "Plain Rice",
+          "description": "Steamed white rice served with choice of sauce"
+        },
+        {
+          "name": "Fried Rice Chicken",
+          "description": "Stir-fried rice with chicken and vegetables"
+        },
+        {
+          "name": "Fried Rice Beef",
+          "description": "Rice stir-fried with beef strips and vegetables"
+        },
+        {
+          "name": "Jollof Rice",
+          "description": "Spicy tomato rice cooked with African spices"
+        },
+        {
+          "name": "Pilau Rice Beef",
+          "description": "Spiced rice cooked with tender beef"
+        },
+        {
+          "name": "Pilau Rice Chicken",
+          "description": "Aromatic rice with chicken and spices"
+        },
+        {
+          "name": "Spaghetti Bolognese",
+          "description": "Spaghetti with rich minced meat sauce"
+        },
+        {
+          "name": "Spaghetti Creamy",
+          "description": "Spaghetti in creamy white sauce"
+        },
+        {
+          "name": "Macaroni Bake Cheese",
+          "description": "Cheesy baked macaroni dish"
+        },
+        {
+          "name": "Vegetable Pasta",
+          "description": "Pasta tossed with fresh vegetables"
+        }
+      ]
+    },
+    {
+      "title": "Grills and Roasts",
+      "items": [
+        {
+          "name": "Half Grilled Chicken",
+          "description": "Charcoal grilled half chicken served with sides"
+        },
+        {
+          "name": "Full Grilled Chicken",
+          "description": "Whole grilled chicken with seasoning"
+        },
+        {
+          "name": "Goat Meat Grill",
+          "description": "Tender grilled goat meat pieces"
+        },
+        {
+          "name": "Beef Steak Grill",
+          "description": "Juicy grilled beef steak"
+        },
+        {
+          "name": "Beef Skewers",
+          "description": "Grilled beef on skewers with spices"
+        },
+        {
+          "name": "Fish Whole Grill",
+          "description": "Whole fish grilled with herbs"
+        },
+        {
+          "name": "Fish Fillet Grill",
+          "description": "Boneless fish grilled and seasoned"
+        },
+        {
+          "name": "Pork Roast",
+          "description": "Roasted pork with crispy skin"
+        },
+        {
+          "name": "Sausage Grill",
+          "description": "Grilled sausages served hot"
+        },
+        {
+          "name": "Mixed Grill Platter",
+          "description": "Combination of chicken, beef, and sausage"
+        }
+      ]
+    },
+    {
+      "title": "Fast Food",
+      "items": [
+        {
+          "name": "Beef Burger",
+          "description": "Juicy beef patty with lettuce, tomato, and sauce"
+        },
+        {
+          "name": "Chicken Burger",
+          "description": "Crispy or grilled chicken burger"
+        },
+        {
+          "name": "Double Burger",
+          "description": "Two patties stacked with cheese and toppings"
+        },
+        {
+          "name": "Chicken Wrap",
+          "description": "Tortilla wrap filled with chicken and veggies"
+        },
+        {
+          "name": "Beef Wrap",
+          "description": "Soft wrap with beef strips and sauce"
+        },
+        {
+          "name": "Shawarma Chicken",
+          "description": "Spiced chicken wrap with garlic sauce"
+        },
+        {
+          "name": "Shawarma Beef",
+          "description": "Beef shawarma with vegetables and sauce"
+        },
+        {
+          "name": "Hot Dog Classic",
+          "description": "Simple hot dog with ketchup and mustard"
+        },
+        {
+          "name": "Loaded Hot Dog",
+          "description": "Hot dog with cheese and toppings"
+        },
+        {
+          "name": "Chips and Chicken",
+          "description": "Fries served with fried or grilled chicken"
+        }
+      ]
+    },
+    {
+      "title": "Breakfast",
+      "items": [
+        {
+          "name": "Maize Porridge",
+          "description": "Warm smooth maize meal porridge"
+        },
+        {
+          "name": "Millet Porridge",
+          "description": "Nutritious millet porridge"
+        },
+        {
+          "name": "Pancakes Plain",
+          "description": "Soft pancakes served with syrup"
+        },
+        {
+          "name": "Pancakes Banana",
+          "description": "Pancakes topped with banana slices"
+        },
+        {
+          "name": "Eggs and Toast",
+          "description": "Eggs served with toasted bread"
+        },
+        {
+          "name": "Eggs and Sausage",
+          "description": "Egg breakfast with sausage and toast"
+        },
+        {
+          "name": "Omelette Special",
+          "description": "Egg omelette with vegetables and cheese"
+        },
+        {
+          "name": "Tea and Scones",
+          "description": "Hot tea with baked scones"
+        },
+        {
+          "name": "Mandazi Snack",
+          "description": "Fried dough snack served with tea"
+        },
+        {
+          "name": "Full Breakfast Combo",
+          "description": "Eggs, sausage, beans, toast, and drink"
+        }
+      ]
+    },
+    {
+      "title": "Soups and Stews",
+      "items": [
+        {
+          "name": "Beef Stew Rich",
+          "description": "Slow-cooked beef in thick tomato gravy"
+        },
+        {
+          "name": "Chicken Stew Classic",
+          "description": "Chicken cooked in flavorful sauce"
+        },
+        {
+          "name": "Fish Soup Light",
+          "description": "Light fish broth with spices"
+        },
+        {
+          "name": "Vegetable Soup Mix",
+          "description": "Healthy mix of vegetables in broth"
+        },
+        {
+          "name": "Bone Broth",
+          "description": "Nutrient-rich broth from slow-cooked bones"
+        },
+        {
+          "name": "Goat Stew",
+          "description": "Goat meat cooked in rich sauce"
+        },
+        { "name": "Beans Stew", "description": "Thick bean stew with spices" },
+        {
+          "name": "Groundnut Soup",
+          "description": "Peanut-based soup with vegetables or meat"
+        },
+        { "name": "Tomato Soup", "description": "Smooth tomato-based soup" },
+        {
+          "name": "Mixed Meat Stew",
+          "description": "Combination of meats in one stew"
+        }
+      ]
+    },
+    {
+      "title": "Healthy and Veg",
+      "items": [
+        {
+          "name": "Garden Salad",
+          "description": "Fresh greens with vegetables and dressing"
+        },
+        {
+          "name": "Chicken Salad",
+          "description": "Salad topped with grilled chicken"
+        },
+        {
+          "name": "Vegetarian Plate",
+          "description": "Balanced plant-based meal"
+        },
+        { "name": "Fruit Bowl Small", "description": "Fresh seasonal fruits" },
+        {
+          "name": "Fruit Bowl Large",
+          "description": "Large portion of mixed fruits"
+        },
+        {
+          "name": "Smoothie Bowl Berry",
+          "description": "Blended berries with toppings"
+        },
+        {
+          "name": "Smoothie Bowl Tropical",
+          "description": "Tropical fruits blended and served cold"
+        },
+        {
+          "name": "Protein Chicken Meal",
+          "description": "High-protein chicken with vegetables"
+        },
+        {
+          "name": "Protein Beef Meal",
+          "description": "Lean beef with balanced sides"
+        },
+        {
+          "name": "Avocado Salad",
+          "description": "Fresh avocado with greens and dressing"
+        }
+      ]
+    },
+    {
+      "title": "Snacks and Bakes",
+      "items": [
+        {
+          "name": "Beef Samosa",
+          "description": "Crispy pastry filled with spiced beef"
+        },
+        {
+          "name": "Veg Samosa",
+          "description": "Pastry filled with vegetables"
+        },
+        {
+          "name": "Meat Pie Classic",
+          "description": "Savory pastry with minced meat filling"
+        },
+        {
+          "name": "Chicken Pie",
+          "description": "Pie filled with creamy chicken"
+        },
+        {
+          "name": "Doughnut Sugar",
+          "description": "Fried dough coated with sugar"
+        },
+        {
+          "name": "Doughnut Glazed",
+          "description": "Soft doughnut with glaze topping"
+        },
+        {
+          "name": "Chocolate Muffin",
+          "description": "Rich chocolate-flavored muffin"
+        },
+        {
+          "name": "Vanilla Muffin",
+          "description": "Light vanilla-flavored muffin"
+        },
+        {
+          "name": "Pizza Slice Pepperoni",
+          "description": "Slice with pepperoni and cheese"
+        },
+        {
+          "name": "Pizza Slice Veg",
+          "description": "Vegetarian pizza slice with toppings"
+        }
+      ]
+    }
+  ]
+}
